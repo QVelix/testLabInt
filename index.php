@@ -9,7 +9,12 @@ require $_SERVER["DOCUMENT_ROOT"]."/Models/User.php";
 switch($_SERVER['REQUEST_METHOD']){
     case 'GET':
         $user = new User();
-        echo json_encode($user->getUser($_GET["id"]), JSON_UNESCAPED_SLASHES |  JSON_UNESCAPED_UNICODE);
+        if(isset($_GET["id"])){
+            echo json_encode($user->getUser($_GET["id"]), JSON_UNESCAPED_SLASHES |  JSON_UNESCAPED_UNICODE);
+        }
+        if(isset($_GET["password"])&&isset($_GET["login"])){
+            echo json_encode($user->auth($_GET["login"], $_GET["password"]), JSON_UNESCAPED_SLASHES |  JSON_UNESCAPED_UNICODE);
+        }
         break;
     case 'POST':
         $user = new User();
