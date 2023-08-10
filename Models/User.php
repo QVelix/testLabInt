@@ -6,8 +6,7 @@ class User{
         $users = $this->getUsers();
         $user = NULL;
         foreach($users as $u){
-            if($u["id"] == $id) $user = $u;
-            continue;
+            if($u["id"] == $id) return $u;
         }
         return $user;
     }
@@ -22,7 +21,6 @@ class User{
         $users = $this->getUsers();
         for($i=0;$i<count($users);$i++){
             if($users[$i]["id"]==$id) unset($users[$i]);
-            continue;
         }
         $this->write($users);
     }
@@ -31,9 +29,17 @@ class User{
         $users = $this->getUsers();
         for($i=0;$i<count($users);$i++){
             if($users[$i]["id"]==$id) $users[$i] = $user;
-            continue;
         }
         $this->write($users);
+    }
+
+    public function auth($login, $password){
+        $users = $this->getUsers();
+        $user = NULL;
+        foreach($users as $u){
+            if($u["login"] == $login && $u["password"] == $password) return $u;
+        }
+        return $user;
     }
 
     private function getUsers(){
