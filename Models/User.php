@@ -15,17 +15,25 @@ class User{
     public function pushUser($user){
         $users = $this->getUsers();
         $users[] = $user;
-        $this->write();
+        $this->write($users);
     }
 
     public function deleteUser($id){
         $users = $this->getUsers();
-        $pos = NULL;
         for($i=0;$i<count($users);$i++){
-            if($users[$i]["id"]==$id) $pos = $i;
+            if($users[$i]["id"]==$id) unset($users[$i]);
             continue;
         }
-        return $pos;
+        $this->write($users);
+    }
+
+    public function changeUser($id, $user){
+        $users = $this->getUsers();
+        for($i=0;$i<count($users);$i++){
+            if($users[$i]["id"]==$id) $users[$i] = $user;
+            continue;
+        }
+        $this->write($users);
     }
 
     private function getUsers(){
