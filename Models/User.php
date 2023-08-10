@@ -18,6 +18,16 @@ class User{
         $this->write();
     }
 
+    public function deleteUser($id){
+        $users = $this->getUsers();
+        $pos = NULL;
+        for($i=0;$i<count($users);$i++){
+            if($users[$i]["id"]==$id) $pos = $i;
+            continue;
+        }
+        return $pos;
+    }
+
     private function getUsers(){
         return json_decode(file_get_contents($_SERVER["DOCUMENT_ROOT"]."/users.json"), JSON_OBJECT_AS_ARRAY);
     }
